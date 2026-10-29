@@ -1,84 +1,119 @@
-/* ===== Base ===== */
+/* ==========================================================
+   Exercício Flexbox
+   Todos os tamanhos saem de --quadro, então a página
+   continua proporcional em qualquer tela.
+   ========================================================== */
+
+:root {
+  --quadro: clamp(140px, 20vw, 210px);       /* lado de cada quadro */
+  --espaco: calc(var(--quadro) * 0.05);       /* espaço entre quadros */
+  --borda-interna: calc(var(--quadro) * 0.04);
+  --peca: calc(var(--quadro) * 0.17);         /* lado de cada peça */
+  --raio: calc(var(--peca) * 0.18);
+
+  --fundo-pagina: #0b1a27;
+  --fundo-painel: #0f2233;
+  --fundo-quadro: #15304a;
+  --linha-quadro: #24445f;
+  --destaque: #12a89d;
+
+  --cor-1: #8ecbff;
+  --cor-2: #55a8ec;
+  --cor-3: #3986d1;
+  --cor-4: #2763a5;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  padding: 24px 16px;
-  background: #ffffff;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 16px;
+  background: var(--fundo-pagina);
   font-family: Arial, sans-serif;
 }
 
-/* Painel escuro com a linha verde em cima: os 8 quadros em 2 linhas de 4 */
+/* ---------- Painel com os 8 quadros ---------- */
 .quadros {
-  max-width: 585px;
-  margin: 0 auto;
-  padding: 7px 7px 40px;
-  border-top: 4px solid #12a89d;
-  background: #0f2233;
+  width: calc(var(--quadro) * 4 + var(--espaco) * 5);
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 7px;
+  gap: var(--espaco);
+  padding: var(--espaco) var(--espaco) calc(var(--espaco) * 5);
+  border-top: 4px solid var(--destaque);
+  border-radius: 4px;
+  background: var(--fundo-painel);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
 }
 
 .quadro {
-  /* 4 por linha: (100% - 3 espaços de 7px) / 4 */
-  flex: 0 0 calc((100% - 21px) / 4);
-  height: 137px;
-  padding: 5px;
+  width: var(--quadro);
+  height: var(--quadro);
+  padding: var(--borda-interna);
   display: flex;
-  border: 1px dashed #24445f;
-  border-radius: 4px;
-  background: #15304a;
+  border: 1px dashed var(--linha-quadro);
+  border-radius: 6px;
+  background: var(--fundo-quadro);
+  transition: border-color 0.2s;
+}
+
+.quadro:hover {
+  border-color: var(--destaque);
 }
 
 .peca {
-  flex: 0 0 23px;
-  width: 23px;
-  height: 23px;
-  border-radius: 4px;
+  flex: 0 0 var(--peca);
+  width: var(--peca);
+  height: var(--peca);
+  border-radius: var(--raio);
 }
 
-.peca-1 { background: #8ecbff; }
-.peca-2 { background: #55a8ec; }
-.peca-3 { background: #3986d1; }
-.peca-4 { background: #2763a5; }
+.peca-1 { background: var(--cor-1); }
+.peca-2 { background: var(--cor-2); }
+.peca-3 { background: var(--cor-3); }
+.peca-4 { background: var(--cor-4); }
 
-/* ===== Os 8 desafios ===== */
+/* ==========================================================
+   Os 8 desafios
+   ========================================================== */
 
-/* 1: em linha, no topo, com o espaço dividido igualmente entre as peças */
+/* 1. Linha no topo, espaço dividido igualmente entre as peças */
 .quadro-1 {
   justify-content: space-evenly;
   align-items: flex-start;
 }
 
-/* 2: em coluna invertida (cor mais escura em cima), encostado embaixo à esquerda */
+/* 2. Coluna invertida (mais escura em cima), encostada embaixo */
 .quadro-2 {
   flex-direction: column-reverse;
   align-items: flex-start;
 }
 
-/* 3: em coluna, centralizado na horizontal e espalhado de cima a baixo */
+/* 3. Coluna centralizada, peças espalhadas de cima a baixo */
 .quadro-3 {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
 
-/* 4: em linha, bem no centro do quadro */
+/* 4. Linha bem no centro do quadro */
 .quadro-4 {
   justify-content: center;
   align-items: center;
 }
 
-/* 5: em linha, no canto de baixo à direita */
+/* 5. Linha no canto de baixo, à direita */
 .quadro-5 {
   justify-content: flex-end;
   align-items: flex-end;
 }
 
-/* 6: a segunda peça cresce e ocupa o espaço que sobra */
+/* 6. A segunda peça cresce e ocupa o espaço que sobra */
 .quadro-6 {
   align-items: flex-start;
 }
@@ -87,7 +122,7 @@ body {
   flex-grow: 1;
 }
 
-/* 7: em linha no topo, com a terceira peça branca */
+/* 7. Linha no topo, terceira peça branca */
 .quadro-7 {
   align-items: flex-start;
 }
@@ -96,21 +131,27 @@ body {
   background: #ffffff;
 }
 
-/* 8: peças grandes quebrando linha, formando uma grade 2x2 */
+/* 8. Peças grandes quebrando linha: grade 2x2 */
 .quadro-8 {
   flex-wrap: wrap;
   align-items: flex-start;
 }
 
 .quadro-8 .peca {
-  flex-basis: 47px;
-  width: 47px;
-  height: 47px;
+  --peca-grande: calc(var(--peca) * 2.05);
+  flex-basis: var(--peca-grande);
+  width: var(--peca-grande);
+  height: var(--peca-grande);
 }
 
-/* ===== Telas pequenas: 2 quadros por linha ===== */
-@media (max-width: 560px) {
-  .quadro {
-    flex-basis: calc((100% - 7px) / 2);
+/* ---------- Celular: 2 quadros por linha ---------- */
+@media (max-width: 640px) {
+  :root {
+    --quadro: calc((100vw - 32px - 3 * 12px) / 2);
+    --espaco: 12px;
+  }
+
+  .quadros {
+    width: calc(var(--quadro) * 2 + var(--espaco) * 3);
   }
 }
