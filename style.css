@@ -1,0 +1,116 @@
+/* ===== Base ===== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 24px 16px;
+  background: #ffffff;
+  font-family: Arial, sans-serif;
+}
+
+/* Painel escuro com a linha verde em cima: os 8 quadros em 2 linhas de 4 */
+.quadros {
+  max-width: 585px;
+  margin: 0 auto;
+  padding: 7px 7px 40px;
+  border-top: 4px solid #12a89d;
+  background: #0f2233;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 7px;
+}
+
+.quadro {
+  /* 4 por linha: (100% - 3 espaços de 7px) / 4 */
+  flex: 0 0 calc((100% - 21px) / 4);
+  height: 137px;
+  padding: 5px;
+  display: flex;
+  border: 1px dashed #24445f;
+  border-radius: 4px;
+  background: #15304a;
+}
+
+.peca {
+  flex: 0 0 23px;
+  width: 23px;
+  height: 23px;
+  border-radius: 4px;
+}
+
+.peca-1 { background: #8ecbff; }
+.peca-2 { background: #55a8ec; }
+.peca-3 { background: #3986d1; }
+.peca-4 { background: #2763a5; }
+
+/* ===== Os 8 desafios ===== */
+
+/* 1: em linha, no topo, com o espaço dividido igualmente entre as peças */
+.quadro-1 {
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
+/* 2: em coluna invertida (cor mais escura em cima), encostado embaixo à esquerda */
+.quadro-2 {
+  flex-direction: column-reverse;
+  align-items: flex-start;
+}
+
+/* 3: em coluna, centralizado na horizontal e espalhado de cima a baixo */
+.quadro-3 {
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 4: em linha, bem no centro do quadro */
+.quadro-4 {
+  justify-content: center;
+  align-items: center;
+}
+
+/* 5: em linha, no canto de baixo à direita */
+.quadro-5 {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+/* 6: a segunda peça cresce e ocupa o espaço que sobra */
+.quadro-6 {
+  align-items: flex-start;
+}
+
+.quadro-6 .peca-2 {
+  flex-grow: 1;
+}
+
+/* 7: em linha no topo, com a terceira peça branca */
+.quadro-7 {
+  align-items: flex-start;
+}
+
+.quadro-7 .peca-3 {
+  background: #ffffff;
+}
+
+/* 8: peças grandes quebrando linha, formando uma grade 2x2 */
+.quadro-8 {
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.quadro-8 .peca {
+  flex-basis: 47px;
+  width: 47px;
+  height: 47px;
+}
+
+/* ===== Telas pequenas: 2 quadros por linha ===== */
+@media (max-width: 560px) {
+  .quadro {
+    flex-basis: calc((100% - 7px) / 2);
+  }
+}
